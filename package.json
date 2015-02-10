@@ -4,11 +4,12 @@
   "private": true,
   "dependencies": {
     "async": "latest",
+    "cheerio": "latest",
     "express": "latest",
-    "socket.io": "latest",
-    "underscore": "latest",
-    "twitter": "latest",
+    "hbs": "^2.8.0",
     "request": "latest",
-    "cheerio": "latest"
+    "socket.io": "latest",
+    "twitter": "latest",
+    "underscore": "latest"
   }
 }

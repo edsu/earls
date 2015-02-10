@@ -1,0 +1,19 @@
+.avatar {
+  height: 25px;
+}
+
+.count {
+  font-weight: bold;
+  text-align: center;
+  font-size: 30pt;
+  color: #444; 
+}
+
+.title {
+  font-size: 18pt;
+}
+
+.resource {
+  margin-bottom: 15px;
+} 
+

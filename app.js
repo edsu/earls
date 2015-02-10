@@ -1,21 +1,69 @@
 #!/usr/bin/env node
 
+// you might want to change this :)
+var track = "#c4l15";
+
 var fs = require('fs');
+var path = require('path');
 var async = require('async');
 var redis = require('redis');
 var _ = require('underscore');
 var cheerio = require('cheerio');
+var express = require('express');
 var Twitter = require('twitter');
 var request = require('request');
 var readline = require('readline');
-
-var track = "#c4l15";
 
 var db = redis.createClient();
 var queue = async.queue(lookupUrl, 1);
 
 function main() {
   listenForTweets(track);
+  runWeb();
+}
+
+function runWeb() {
+  var app = express();
+  app.use(express.static('public'));
+  app.enable('trust proxy');
+  app.set('views', path.join(__dirname, 'views'));
+  app.set('view engine', 'hbs');
+
+  app.get('/', function(req, res) {
+    getStats(function (stats) {
+      res.render('index.hbs', {track: track, stats: stats});
+    });
+  });
+
+  app.get('/stats.json', function(req, res) {
+    getStats(function (stats) {
+      res.json(stats);
+    });
+  });
+
+  app.listen(3000);
+}
+
+function addTitle(score, callback) {
+  db.hget(score.url, 'title', function(err, result) {
+    score.title = result;
+    callback(null, score);
+  });
+}
+
+function addTweets(score, callback) {
+  db.lrange('tweets:' + score.url, 0, -1, function (err, tweets) {
+    async.mapSeries(tweets, addTweetInfo, function (err, results) {
+      score.tweets = results;
+      callback(null, score);
+    });
+  });
+}
+
+function addTweetInfo(tweetId, callback) {
+  db.hgetall(tweetId, function (err, tweet) {
+    callback(null, tweet);
+  });
 }
 
 function listenForTweets() {
@@ -83,9 +131,26 @@ function addResource(r) {
   db.hset(tweetId, "avatar", avatar);
 }
 
-function loadExisting() {
+function getStats(callback) {
+  db.zrevrange('urls', 0, 100, 'withscores', function(err, results) {
+    scores = [];
+    for (var i = 0; i < results.length; i+=2) {
+      scores.push({
+        url: results[i],
+        count: results[i + 1]
+      });
+    }
+    async.mapSeries(scores, addTitle, function(err, results) {
+      async.mapSeries(scores, addTweets, function(err, results) {
+        callback(results);
+      });
+    });
+  });
+}
+
+function loadExisting(filename) {
   var rd = readline.createInterface({
-    input: fs.createReadStream('tweets.json'),
+    input: fs.createReadStream(filename),
     output: process.stdout,
     terminal: false
   });
@@ -96,6 +161,6 @@ function loadExisting() {
 }
 
 if (require.main === module) {
-  loadExisting();
+  //loadExisting('tweets.json');
   main();
 }

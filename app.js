@@ -106,10 +106,17 @@ function lookupUrl(job, done) {
   console.log('looking up url: ' + job.url);
   request(job.url, function (error, response, body) {
     if (! error) {
-      var $ = cheerio.load(body);
+      var mimetype = response.headers['content-type'];
+      if (mimetype && mimetype.match(/html/)) {
+        var $ = cheerio.load(body);
+        var title = $("head title").text();
+      } else {
+        var title = response.request.uri.href;
+      }
+
       addResource({
         url: response.request.uri.href,
-        title: $("head title").text(),
+        title: title,
         tweet: job.tweet
       });
       done();

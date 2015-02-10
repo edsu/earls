@@ -4,6 +4,7 @@
 var track = "#c4l15";
 
 var fs = require('fs');
+var http = require('http');
 var path = require('path');
 var async = require('async');
 var redis = require('redis');
@@ -12,6 +13,7 @@ var cheerio = require('cheerio');
 var express = require('express');
 var Twitter = require('twitter');
 var request = require('request');
+var sockio = require('socket.io');
 var readline = require('readline');
 
 var db = redis.createClient();
@@ -24,6 +26,9 @@ function main() {
 
 function runWeb() {
   var app = express();
+  var server = http.Server(app);
+  var io = sockio(server);
+
   app.use(express.static('public'));
   app.enable('trust proxy');
   app.set('views', path.join(__dirname, 'views'));

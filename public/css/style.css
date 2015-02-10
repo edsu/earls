@@ -1,5 +1,7 @@
 .avatar {
   height: 25px;
+  margin: 2px;
+  border: thin solid #aaaaaa;
 }
 
 .count {

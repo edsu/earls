@@ -8,23 +8,26 @@
     <script src="js/vendor/jquery.js"></script>
     <script src="js/vendor/handlebars.js"></script>
     <script src="js/app.js"></script>
+    <title>#c4l15 urls</title>
   </head>
 
   <body>
 
     <header class="row">
-    <h1 class="large-offset-3 large-10 large-centered columns">
-      #c4l15 most tweeted urls
-    </h1>
-    <hr>
+      <div class="large-offset-1 large-11 large-centered columns text-center">
+        <h1>#c4l15 urls</h1>
+        <em>as mentioned in twitter</em>
+        <hr>
+      </div>
     </header>
+
 
     <section id="resources">
     </section>
 
     <script id="resource-template" type="text/x-handlebars-template">
       <article class="resource row">
-        <div class="count small-2 large-offset-3 large-1 columns">{{this.count}}</div>
+        <div class="count small-2 large-offset-1 large-1 columns">{{this.count}}</div>
         <div class="detail small-10 large-8 columns">
           <a class="title" href="{{url}}">
             {{#if title}}

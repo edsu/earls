@@ -6,6 +6,8 @@
     "express": "latest",
     "socket.io": "latest",
     "underscore": "latest",
-    "twitter": "latest"
+    "twitter": "latest",
+    "request": "latest",
+    "jsdom": "latest"
   }
 }

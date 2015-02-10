@@ -2,9 +2,9 @@
 
 var fs = require('fs');
 var async = require('async');
-var jsdom = require('jsdom');
 var redis = require('redis');
 var _ = require('underscore');
+var cheerio = require('cheerio');
 var Twitter = require('twitter');
 var request = require('request');
 var readline = require('readline');
@@ -38,23 +38,12 @@ function checkTweet(tweet) {
   console.log('processing tweet: ' + tweet.id_str);
   _.each(tweet.entities.urls, function(urlEntity) {
     var url = urlEntity.expanded_url;
-
-    db.hget(url, 'title', function(err, title) {
-      if (! title) {
-        console.log('queueing lookup for ' + url);
-        queue.push({url: url, tweet: tweet}, function (err) {
-          if (! err) {
-            console.log("finished processing url: " + url);
-          } else {
-            console.log("error while processing url: " + err);
-          }
-        });
+    console.log('queueing lookup for ' + url);
+    queue.push({url: url, tweet: tweet}, function (err) {
+      if (! err) {
+        console.log("finished processing url: " + url);
       } else {
-        addResource({
-          url: url,
-          title: title,
-          tweet: tweet
-        });
+        console.log("error while processing url: " + err);
       }
     });
   });
@@ -62,21 +51,18 @@ function checkTweet(tweet) {
 
 function lookupUrl(job, done) {
   console.log('looking up url: ' + job.url);
-  var dom = jsdom.env({
-    url: job.url,
-    scripts: ["http://code.jquery.com/jquery.js"],
-    done: function (errors, window) {
-      if (errors) {
-        console.log("unable to lookup " + url + ": " + errors.join(", "));
-      } else {
-        addResource({
-          url: window.location.href,
-          title: window.$("head title").text(),
-          tweet: job.tweet
-        });
-      }
-      window.close();
+  request(job.url, function (error, response, body) {
+    if (! error) {
+      var $ = cheerio.load(body);
+      addResource({
+        url: response.request.uri.href,
+        title: $("head title").text(),
+        tweet: job.tweet
+      });
       done();
+      $ = null;
+    } else {
+      done(error);
     }
   });
 }

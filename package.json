@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "async": "latest",
     "express": "latest",
     "socket.io": "latest",
     "underscore": "latest",
     "twitter": "latest",
     "request": "latest",
-    "jsdom": "latest"
+    "cheerio": "latest"
   }
 }

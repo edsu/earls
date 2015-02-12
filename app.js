@@ -1,8 +1,5 @@
 #!/usr/bin/env node
 
-// you might want to change this :)
-var track = "#c4l15";
-
 var fs = require('fs');
 var http = require('http');
 var path = require('path');
@@ -19,7 +16,7 @@ var readline = require('readline');
 var db = redis.createClient();
 var queue = async.queue(lookupUrl, 1);
 
-function main() {
+function main(track) {
   listenForTweets(track);
   runWeb();
 }
@@ -35,9 +32,7 @@ function runWeb() {
   app.set('view engine', 'hbs');
 
   app.get('/', function(req, res) {
-    getStats(function (stats) {
-      res.render('index.hbs', {track: track, stats: stats});
-    });
+    res.render('index', {track: track});
   });
 
   app.get('/stats.json', function(req, res) {
@@ -173,6 +168,12 @@ function loadExisting(filename) {
 }
 
 if (require.main === module) {
-  //loadExisting('tweets.json');
-  main();
+  var track = process.argv[2] || process.env.EARLS_TRACK;
+  if (! track) {
+    console.log("please supply track either as argument or using EARLS_TRACK environment variable");
+    process.exit(1);
+  } else {
+    //loadExisting('tweets.json');
+    main(track);
+  }
 }

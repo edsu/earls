@@ -8,14 +8,14 @@
     <script src="js/vendor/jquery.js"></script>
     <script src="js/vendor/handlebars.js"></script>
     <script src="js/app.js"></script>
-    <title>#c4l15 urls</title>
+    <title>{{track}} urls</title>
   </head>
 
   <body>
 
     <header class="row">
       <div class="large-offset-1 large-11 large-centered columns text-center">
-        <h1>#c4l15 urls</h1>
+        <h1>{{track}} urls</h1>
         <em>as mentioned in twitter</em>
         <hr>
       </div>
@@ -27,24 +27,23 @@
 
     <script id="resource-template" type="text/x-handlebars-template">
       <article class="resource row">
-        <div class="count small-2 large-offset-1 large-1 columns">{{this.count}}</div>
+        <div class="count small-2 large-offset-1 large-1 columns">\{{this.count}}</div>
         <div class="detail small-10 large-8 columns">
-          <a class="title" href="{{url}}">
-            {{#if title}}
-              {{title}}
-            {{else}}
-              {{url}}
-            {{/if}}
+          <a class="title" href="\{{url}}">
+            \{{#if title}}
+              \{{title}}
+            \{{else}}
+              \{{url}}
+            \{{/if}}
           </a>
           <br>
-          {{#each tweets}}
-          <a href="{{this.url}}">
-            <img class="avatar" title="{{this.name}}" src="{{this.avatar}}">
+          \{{#each tweets}}
+          <a href="\{{this.url}}">
+            <img class="avatar" title="\{{this.name}}" src="\{{this.avatar}}">
           </a>
-          {{/each}}
+          \{{/each}}
         </div>
       </article>
     </script>
-
   </body>
 </html>

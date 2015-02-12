@@ -144,7 +144,7 @@ function addResource(r) {
 }
 
 function getStats(callback) {
-  db.zrevrange('urls', 0, 100, 'withscores', function(err, results) {
+  db.zrevrange('urls', 0, 200, 'withscores', function(err, results) {
     scores = [];
     for (var i = 0; i < results.length; i+=2) {
       scores.push({

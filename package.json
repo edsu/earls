@@ -10,6 +10,7 @@
     "request": "latest",
     "socket.io": "^1.3.3",
     "twitter": "latest",
+    "redis": "latest",
     "underscore": "latest"
   }
 }

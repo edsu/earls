@@ -10,6 +10,6 @@ at conferences.
 1. npm install
 1. set Twitter credentials in environment: TWITTER\_CONSUMER\_KEY, TWITTER\_CONSUMER\_SECRET, TWITTER\_ACCESS\_TOKEN, TWITTER\_ACCESS\_TOKEN\_SECRET
 1. optionally set hashtag to track in environment (useful for Heroku): EARLS_TRACK
-1. ./app.js '#c4l15'
+1. ./earls.js '#c4l15'
 
 

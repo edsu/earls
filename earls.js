@@ -36,6 +36,7 @@ function main(track) {
 
   app.get('/stats.json', function(req, res) {
     getStats(db, function (stats) {
+      res.set('cache-control', 'public, max-age: 300');
       res.json(stats);
     });
   });

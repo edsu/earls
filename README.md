@@ -14,7 +14,7 @@ at conferences.
 
 ## Heroku
 
-To get things to run on Heroku you'll need to set some environment variables.
+To get things to run on Heroku you'll need to set some environment variables:
 
 ```
 heroku config:set EARLS_TRACK=#c4l15

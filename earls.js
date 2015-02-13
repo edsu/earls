@@ -74,12 +74,12 @@ function listenForTweets(track, db) {
     access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
   });
   var stats = new Stats(db);
+
   console.log('connecting to twitter filter stream for', track);
   twtr.stream('statuses/filter', {track: track}, function(stream) {
-    stream.on('data', stats.checkTweet);
-    stream.on('connect', function() {
-      console.log('connected to twitter filter stream for', track);
-    });
+    // kind of awkward that we can't just say status.checkTweet here
+    // but we need to make sure the contet is correct
+    stream.on('data', Stats.prototype.checkTweet.bind(stats));
     stream.on('error', function(error) {
       console.log('twitter problem:', error);
     });

@@ -41,7 +41,7 @@ function main(track) {
   });
 
   listenForTweets(track, db);
-  app.listen(3000);
+  app.listen(process.ENV.PORT || 3000);
 }
 
 

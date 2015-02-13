@@ -25,3 +25,19 @@ heroku config:set TWITTER_ACCESS_TOKEN_KEY=XXX
 heroku config:set TWITTER_ACCESS_TOKEN_SECRET=XXX
 ```
 
+## Loading
+
+earls listens for new tweets. If you'd like to add some existing tweets that
+you've collected with [twarc](http://github.com/edsu/twarc) you can load them
+into redis like so:
+
+    ./load.js tweets.json 
+
+This will connect to a local redis instance by default. If you would like to 
+load into a remote herkou redis db get the redis URI from the resources tab in 
+the Heroku admin, and then pass it in as a second parameter:
+
+    ./load.js tweets.json redis://redistogo:YOURPASSWORDHERE@mummichog.redistogo.com:10771
+
+Loading existing tweets is useful when you haven't been running earls since the
+beginning of an event, and you would like to load some of this historical data.

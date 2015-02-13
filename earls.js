@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-var fs = require('fs');
 var url = require('url');
 var http = require('http');
 var path = require('path');
@@ -12,7 +11,6 @@ var express = require('express');
 var Twitter = require('twitter');
 var request = require('request');
 var sockio = require('socket.io');
-var readline = require('readline');
 
 /*
  * The main web server function. This will create a webserver

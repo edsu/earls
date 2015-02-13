@@ -67,7 +67,6 @@ function getRedis(redisUrl) {
  */
 
 function listenForTweets(track, db) {
-  console.log('listening for new tweets:', track);
   var twtr = new Twitter({
     consumer_key: process.env.TWITTER_CONSUMER_KEY,
     consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
@@ -75,10 +74,14 @@ function listenForTweets(track, db) {
     access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
   });
   var stats = new Stats(db);
+  console.log('connecting to twitter filter stream for', track);
   twtr.stream('statuses/filter', {track: track}, function(stream) {
     stream.on('data', stats.checkTweet);
+    stream.on('connect', function() {
+      console.log('connected to twitter filter stream for', track);
+    });
     stream.on('error', function(error) {
-      console.log(error);
+      console.log('twitter problem:', error);
     });
   });
 }

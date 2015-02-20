@@ -3,6 +3,10 @@ it uses node and redis to watch Twitter for new tweets with urls. The idea
 is that it can help share information about what is being tweeted about
 at conferences, and other events that people are tweeting at.
 
+When your event is over it is easy to create a static site of your earls 
+instance and turn off the server and redis backend, and just let it be served up
+as html, css and javascript.
+
 ## Install
 
 1. install [redis](http://redis.io) and [node](http://nodejs.org)

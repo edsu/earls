@@ -65,11 +65,16 @@ function getRedis(redisUrl) {
  */
 
 function listenForTweets(track, db) {
+  var e = process.env;
+  if (!(e.TWITTER_CONSUMER_KEY && e.TWITTER_CONSUMER_SECRET && e.TWITTER_ACCESS_TOKEN && e.TWITTER_ACCESS_TOKEN_SECRET)) {
+    console.error("you must set TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_ACCESS_TOKEN and TWITTER_ACCESS_TOKEN_SECRET in your environment");
+    process.exit(1)
+  }
   var twtr = new Twitter({
-    consumer_key: process.env.TWITTER_CONSUMER_KEY,
-    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-    access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
-    access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
+    consumer_key: e.TWITTER_CONSUMER_KEY,
+    consumer_secret: e.TWITTER_CONSUMER_SECRET,
+    access_token_key: e.TWITTER_ACCESS_TOKEN,
+    access_token_secret: e.TWITTER_ACCESS_TOKEN_SECRET
   });
   var stats = new Stats(db);
 

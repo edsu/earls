@@ -21,7 +21,7 @@ before you can push there:
 heroku config:set EARLS_TRACK=#c4l15
 heroku config:set TWITTER_CONSUMER_KEY=XXX
 heroku config:set TWITTER_CONSUMER_SECRET=XXX
-heroku config:set TWITTER_ACCESS_TOKEN_KEY=XXX
+heroku config:set TWITTER_ACCESS_TOKEN=XXX
 heroku config:set TWITTER_ACCESS_TOKEN_SECRET=XXX
 ```
 

@@ -1,7 +1,6 @@
-earls is a hack to display urls that are being tweeted with a given hashtag.
-it uses node and redis to watch Twitter for new tweets with urls. The idea
-is that it can help share information about what is being tweeted about
-at conferences, and other events that people are tweeting at.
+earls is a hack to display web resources that are being tweeted with a given hashtag.
+It uses node and redis to watch Twitter for new tweets with urls, then fetches the web resource, attempts to pull the title out of the HTML, and then stashes away some results into a Redis database The idea
+is that it can help share information about what is being tweeted about at conferences, and other real or virtual events that people are tweeting at.
 
 When your event is over it is easy to create a static site of your earls 
 instance and turn off the node server and redis backend, and just let it be 

@@ -23,10 +23,16 @@ var rd = readline.createInterface({
   terminal: false
 });
 
+var count = 0;
+
 rd.on('line', function(line) {
   var tweet = JSON.parse(line);
   console.log(tweet.id_str);
   stats.checkTweet(tweet);
+  count += 1;
 });
 
-
+rd.on('close', function() {
+  console.log("processed " + count + " tweets");
+  process.exit(0);
+});

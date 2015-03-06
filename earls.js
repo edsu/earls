@@ -98,7 +98,13 @@ function Stats(db) {
   var that = this;
   var lookupUrl = function(job, done) {
     console.log('looking up url: ' + job.url);
-    request(job.url, function (error, response, body) {
+    var opts = {
+      url: job.url,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (X11; Linux i586; rv:31.0) Gecko/20100101 Firefox/31.0'
+      }
+    };
+    request(opts, function (error, response, body) {
       if (! error) {
         var mimetype = response.headers['content-type'];
         var title = response.request.uri.href;

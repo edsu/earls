@@ -13,8 +13,8 @@ var readline = require('readline');
 
 var filename = process.argv[2];
 var redisUrl = process.argv[3];
-
 var db = earls.getRedis(redisUrl);
+
 var stats = new earls.Stats(db);
 
 var rd = readline.createInterface({
@@ -25,7 +25,7 @@ var rd = readline.createInterface({
 
 rd.on('line', function(line) {
   var tweet = JSON.parse(line);
-  console.log(tweet.id_str)
+  console.log(tweet.id_str);
   stats.checkTweet(tweet);
 });
 

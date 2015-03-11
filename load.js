@@ -33,6 +33,9 @@ rd.on('line', function(line) {
 });
 
 rd.on('close', function() {
-  console.log("processed " + count + " tweets");
-  process.exit(0);
+  console.log("queued " + count + " tweets for processing");
+  stats.queue.drain = function() {
+    console.log("finished processing tweets");
+    process.exit(0);
+  };
 });

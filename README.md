@@ -13,6 +13,7 @@ served up as HTML, CSS and JavaScript.
 1. cd earls
 1. npm install
 1. set Twitter credentials in environment: TWITTER\_CONSUMER\_KEY, TWITTER\_CONSUMER\_SECRET, TWITTER\_ACCESS\_TOKEN, TWITTER\_ACCESS\_TOKEN\_SECRET
+1. set ENV about TCP/IP port and IP address using EARLS_PORT=Your-Port amd EARLS_HOSTNAME="Your-IP"
 1. ./earls.js '#c4l15'
 
 ## Heroku
@@ -22,11 +23,15 @@ before you can push there:
 
 ```
 heroku config:set EARLS_TRACK=#c4l15
+heroku config:set EARLS_PORT=Your-Port
+heroku config:set EARLS_HOSTNAME="Your-IP"
 heroku config:set TWITTER_CONSUMER_KEY=XXX
 heroku config:set TWITTER_CONSUMER_SECRET=XXX
 heroku config:set TWITTER_ACCESS_TOKEN=XXX
 heroku config:set TWITTER_ACCESS_TOKEN_SECRET=XXX
 ```
+EARLS_PORT, *earls* default port is 3000.
+EARLS_HOSTNAME, *earls* default hostname is "" (listen and bind on all local IP interfaces like "*").
 
 ## Loading
 

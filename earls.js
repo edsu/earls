@@ -27,6 +27,7 @@ function main(track) {
   app.enable('trust proxy');
   app.set('views', path.join(__dirname, 'views'));
   app.set('view engine', 'hbs');
+  app.set('json spaces', 2);
 
   app.get('/', function(req, res) {
     res.render('index', {track: track});
@@ -110,7 +111,10 @@ function Stats(db) {
         var title = response.request.uri.href;
         if (mimetype && mimetype.match(/html/)) {
           var $ = cheerio.load(body);
-          title = $("head title").text();
+          title = $("head meta[property='og:title']").attr('content');
+          if (! title) {
+            title = $("head title").text();
+          }
         }
         that.addResource({
           url: response.request.uri.href,

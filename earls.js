@@ -40,8 +40,8 @@ function main(track) {
     });
   });
 
-  listenForTweets(track, db);
-  app.listen(process.env.PORT || 3000);
+  listenForTweets(track, db, io);
+  server.listen(process.env.PORT || 3000);
 }
 
 
@@ -65,7 +65,7 @@ function getRedis(redisUrl) {
  * Listen for tweets to add to the database.
  */
 
-function listenForTweets(track, db) {
+function listenForTweets(track, db, io) {
   var e = process.env;
   if (!(e.TWITTER_CONSUMER_KEY && e.TWITTER_CONSUMER_SECRET && e.TWITTER_ACCESS_TOKEN && e.TWITTER_ACCESS_TOKEN_SECRET)) {
     console.error("you must set TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_ACCESS_TOKEN and TWITTER_ACCESS_TOKEN_SECRET in your environment");
@@ -77,13 +77,16 @@ function listenForTweets(track, db) {
     access_token_key: e.TWITTER_ACCESS_TOKEN,
     access_token_secret: e.TWITTER_ACCESS_TOKEN_SECRET
   });
-  var stats = new Stats(db);
+  var stats = new Stats(db, io);
 
   console.log('connecting to twitter filter stream for', track);
   twtr.stream('statuses/filter', {track: track}, function(stream) {
     // kind of awkward that we can't just say status.checkTweet here
     // but we need to make sure the contet is correct
-    stream.on('data', Stats.prototype.checkTweet.bind(stats));
+    //stream.on('data', Stats.prototype.checkTweet.bind(stats));
+    stream.on('data', function(tweet) {
+      stats.checkTweet(tweet);
+    });
     stream.on('error', function(error) {
       console.log('twitter problem:', error);
     });
@@ -95,7 +98,7 @@ function listenForTweets(track, db) {
  * a class to extract stats from Tweets
  */
 
-function Stats(db) {
+function Stats(db, io) {
   var that = this;
   var lookupUrl = function(job, done) {
     console.log('looking up url: ' + job.url);
@@ -116,11 +119,13 @@ function Stats(db) {
             title = $("head title").text();
           }
         }
-        that.addResource({
+        var r = {
           url: response.request.uri.href,
           title: title,
           tweet: job.tweet
-        });
+        };
+        io.sockets.emit('update', r);
+        that.addResource(r);
         done();
         $ = null;
       } else {

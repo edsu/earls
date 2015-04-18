@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maxiumum-scale=1.0" />
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/vendor/handlebars.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/handlebars.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="js/app.js"></script>
     <title>{{track}} urls</title>
   </head>
@@ -16,7 +17,7 @@
     <header class="row">
       <div class="large-offset-1 large-11 large-centered columns text-center">
         <h1>{{track}} urls</h1>
-        <em>as mentioned in twitter ; reload for latest results</em>
+        <div id="update"></div>
         <hr>
       </div>
     </header>
@@ -35,14 +36,22 @@
               \{{url}}
             \{{/if}}
           </a>
-          <br>
-          \{{#each tweets}}
-          <a href="\{{this.url}}">
-            <img class="avatar" title="\{{this.name}}" src="\{{this.avatar}}">
-          </a>
-          \{{/each}}
+          <div class="avatars">
+            \{{#each tweets}}
+            <a href="\{{this.url}}">
+              <img class="avatar" title="\{{this.name}}" src="\{{this.avatar}}">
+            </a>
+            \{{/each}}
+          </div>
         </div>
       </article>
     </script>
+
+    <script id="update-template" type="text/x-handlebars-template">
+      <div>
+        recent: <a href="\{{url}}">\{{title}}</a>
+      </div>
+    </script>
+
   </body>
 </html>

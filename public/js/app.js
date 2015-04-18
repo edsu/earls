@@ -8,7 +8,8 @@ $(function() {
     });
   });
 
-  var socket = io();
+  console.log(window.location.href);
+  var socket = io({path: window.location.pathname + 'socket.io'});
   socket.on('update', function(r) {
     var u = $("#update");
     u.fadeOut('slow', function() {
@@ -43,7 +44,6 @@ $(function() {
       resources.empty();
       resources.append(articles);
     }
-
   });
 
   function getCount(e) {

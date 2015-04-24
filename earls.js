@@ -124,7 +124,9 @@ function Stats(db, io) {
           title: title,
           tweet: job.tweet
         };
-        io.sockets.emit('update', r);
+        if (typeof(io) != 'undefined') {
+          io.sockets.emit('update', r);
+        }
         that.addResource(r);
         done();
         $ = null;

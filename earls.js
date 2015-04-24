@@ -157,7 +157,7 @@ Stats.prototype.checkTweet = function(tweet) {
 
 Stats.prototype.addResource = function(r) {
   var tweetId = 'tweet:' + r.tweet.id_str;
-  var avatar = r.tweet.user.profile_image_url;
+  var avatar = r.tweet.user.profile_image_url_https;
   var name = r.tweet.user.screen_name;
   var tweetUrl = "https://twitter.com/" + r.tweet.user.screen_name + "/statuses/" + r.tweet.id_str;
 

@@ -2,13 +2,10 @@ $(function() {
   var template = Handlebars.compile($("#resource-template").html());
   var update = Handlebars.compile($("#update-template").html());
 
-  $.getJSON('stats.json', function(stats) {
-    $(stats).each(function(i, r) {
-      $("#resources").append(template(r));
-    });
+  $(stats).each(function(i, r) {
+    $("#resources").append(template(r));
   });
 
-  console.log(window.location.href);
   var socket = io({path: window.location.pathname + 'socket.io'});
   socket.on('update', function(r) {
     var u = $("#update");

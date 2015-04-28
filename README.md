@@ -44,3 +44,22 @@ the Heroku admin, and then pass it in as a second parameter:
 
 Loading existing tweets is useful when you haven't been running earls since the
 beginning of an event, and you would like to load some of this historical data.
+
+## Archiving
+
+Once an event is over you can create a static snapshot very easily using 
+wget, and host it yourself or create a permanent redirect to a Github Pages 
+site.
+
+For example if you had an earls instance running at http://inkdroid.org/pda2015/
+you could:
+
+    wget --page-requisites --no-host-directories --cut-dirs 1 http://inkdroid.org/pda2015/
+    git init 
+    git add *
+    git commit -m 'snapshot of pda2015 earls instance' -a
+    git push git@github.com:edsu/pda2015.git origin gh-pages
+
+
+
+

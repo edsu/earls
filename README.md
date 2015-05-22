@@ -15,6 +15,8 @@ served up as HTML, CSS and JavaScript.
 1. set Twitter credentials in environment: TWITTER\_CONSUMER\_KEY, TWITTER\_CONSUMER\_SECRET, TWITTER\_ACCESS\_TOKEN, TWITTER\_ACCESS\_TOKEN\_SECRET
 1. ./earls.js '#c4l15'
 
+A web server is started at [http://localhost:3000](http://localhost:3000), listing the URLs that have been collected.
+
 ## Heroku
 
 To get things to run on Heroku you'll need to set some environment variables

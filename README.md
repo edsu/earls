@@ -57,8 +57,11 @@ you could:
     wget --page-requisites --no-host-directories --cut-dirs 1 http://inkdroid.org/pda2015/
     git init 
     git add *
-    git commit -m 'snapshot of pda2015 earls instance' -a
-    git push git@github.com:edsu/pda2015.git origin gh-pages
+    git commit -m 'snapshot of earls instance' -a
+    git remote add git@github.com:edsu/pda2015.git
+    git push origin master
+    git checkout -b gh-pages
+    git push origin gh-pages
     # goto http://edsu.github.io/pda2015/
 
 

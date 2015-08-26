@@ -63,6 +63,82 @@ you could:
     git push origin gh-pages
     # goto http://edsu.github.io/pda2015/
 
+## A gentle guide to setting up on Heroku for the uninitiated
+[get a heroku account](https://signup.heroku.com/)
 
+install git
+
+[install node](https://nodejs.org/)
+
+[install toolbelt](https://toolbelt.heroku.com/)
+
+## and go!
++ on heroku page, created your new app, eg., `test-earls`
++ on [twitter's developer page](https://dev.twitter.com/) create a new app and record the twitter authentication credentials we pass to Heroku below. 
++ in the terminal, type the following sequence of commands. Note that XXX are your credentials from Twitter:
+
+`$ git clone https://github.com/edsu/earls`
+
+`$ cd earls`
+
+`$ heroku login`
+
+`$ heroku config:set EARLS_TRACK="#msudai" --app test-earls`
+
+`$ heroku config:set TWITTER_CONSUMER_KEY=XXX --app test-earls`
+
+`$ heroku config:set TWITTER_CONSUMER_SECRET=XXX --app test-earls`
+
+`$ heroku config:set TWITTER_ACCESS_TOKEN=XXX --app test-earls`
+
+`$ heroku config:set TWITTER_ACCESS_TOKEN_SECRET=XXX --app test-earls`
+
+`$ git init`
+
+`$ heroku git:remote -a sg-earls`
+
+`$  git add .`
+
+`$ git commit -am "do it"`
+
+`$ git push heroku master`
+
+...at this point, once you're back to the prompt, the url for your app will be displayed. You need to give Heroku credit card details for this to go live; since you are most likely using the Free Tier of service on Heroku, you will not be billed.
+
+## Additional packages on Heroku 
+
+Install a logging package so you can see where it has gone wrong:
+
+`$ heroku addons:create papertrail:choklad`
+
+Install Redistogo from Heroku addons.
+
+`$ heroku addons:create redistogo:nano`
+
+## Getting data into Heroku from twarc archive
+
+To get the data up into your instance I found a few dependencies for Node.js needed to be installed on my OSX Yosemite machine:
+
+`$ npm install async`
+
+`$ npm install redis`
+
+`$ npm install underscore`
+
+`$ npm install cheerio`
+
+`$ npm install express`
+
+`$ npm install twitter`
+
+`$ npm install request`
+
+`$ npm install socket.io`
+
+For Twarc this might need to be installed:
+
+`$ pip install pyopenssl ndg-httpsclient pyasn1` 
+
+Which enabled SSL requests to work.
 
 

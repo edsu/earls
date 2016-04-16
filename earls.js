@@ -36,7 +36,7 @@ function main(track) {
   app.get('/js/stats.js', function(req, res) {
     getStats(db, function (stats) {
       res.set('cache-control', 'public, max-age: 20');
-      res.send('var stats = ' + JSON.stringify(stats) + ';');
+      res.send('var stats = ' + jsFriendlyJSONStringify(stats) + ';');
     });
   });
 
@@ -200,7 +200,7 @@ function getStats(db, callback) {
     });
   };
 
-  db.zrevrange('urls', 0, 200, 'withscores', function(err, results) {
+  db.zrevrange('urls', 0, 1000, 'withscores', function(err, results) {
     scores = [];
     for (var i = 0; i < results.length; i+=2) {
       scores.push({
@@ -215,6 +215,12 @@ function getStats(db, callback) {
     });
   });
 
+}
+
+function jsFriendlyJSONStringify(s) {
+    return JSON.stringify(s).
+        replace(/\u2028/g, '\\u2028').
+        replace(/\u2029/g, '\\u2029');
 }
 
 

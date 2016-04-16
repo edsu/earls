@@ -58,7 +58,7 @@ you could:
     git init 
     git add *
     git commit -m 'snapshot of earls instance' -a
-    git remote add git@github.com:edsu/pda2015.git
+    git remote add origin git@github.com:edsu/pda2015.git
     git checkout -b gh-pages
     git push origin gh-pages
     # goto http://edsu.github.io/pda2015/
